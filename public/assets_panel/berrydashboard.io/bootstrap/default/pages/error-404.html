@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>404 | Berry Bootstrap 5 Admin Template</title>
+
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="description"
+      content="Berry is made using Bootstrap 5 design framework. Download the free admin template & use it for your project."
+    />
+    <meta
+      name="keywords"
+      content="Berry, Dashboard UI Kit, Bootstrap 5, Admin Template, Admin Dashboard, CRM, CMS, Bootstrap Admin Template"
+    />
+    <meta name="author" content="CodedThemes" />
+
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      id="main-font-link"
+    />
+
+    <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css" />
+
+    <link rel="stylesheet" href="../assets/fonts/feather.css" />
+
+    <link rel="stylesheet" href="../assets/fonts/fontawesome.css" />
+
+    <link rel="stylesheet" href="../assets/fonts/material.css" />
+
+    <link
+      rel="stylesheet"
+      href="../assets/css/style.css"
+      id="main-style-link"
+    />
+    <link
+      rel="stylesheet"
+      href="../assets/css/style-preset.css"
+      id="preset-style-link"
+    />
+  </head>
+
+  <body>
+    <div class="loader-bg">
+      <div class="loader-track">
+        <div class="loader-fill"></div>
+      </div>
+    </div>
+
+    <div class="maintenance-block">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card error-card">
+              <div class="card-body">
+                <div class="error-image-block">
+                  <img
+                    class="image-animated img-fluid"
+                    src="../assets/images/pages/img-maintenance-bg.svg"
+                    alt="image"
+                  />
+                  <img
+                    src="../assets/images/pages/img-error-text.svg"
+                    class="img-404 error-text"
+                    alt="image"
+                  />
+                  <img
+                    src="../assets/images/pages/img-error-primary-widget.svg"
+                    class="img-404 error-primary"
+                    alt="image"
+                  />
+                  <img
+                    src="../assets/images/pages/img-error-secondary-widget.svg"
+                    class="img-404 puple error-secondary"
+                    alt="image"
+                  />
+                </div>
+                <div class="text-center">
+                  <h1 class="mt-4"><b>Something is wrong</b></h1>
+                  <p class="mt-4 text-muted">
+                    The page you are looking was moved, removed,<br />
+                    renamed, or might never exist!
+                  </p>
+                  <button type="button" class="btn btn-primary mb-3">
+                    <i class="ti ti-home me-2"></i>Home
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/bootstrap.min.js"></script>
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/pcoded.js"></script>
+    <script src="../assets/js/plugins/feather.min.js"></script>
+    <div class="pct-c-btn">
+      <button
+        class="btn btn-secondary"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvas_layout"
+      >
+        <i data-feather="settings"></i>
+      </button>
+    </div>
+    <div
+      class="offcanvas pct-offcanvas offcanvas-end"
+      tabindex="-1"
+      id="offcanvas_layout"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Berry Customizer</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="pct-body" style="height: calc(100% - 60px)">
+        <div class="offcanvas-body">
+          <div class="card">
+            <div class="card-header">
+              <h5>Layout</h5>
+            </div>
+            <div class="card-body">
+              <p class="mb-1">Mode</p>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="layout_mode"
+                  id="layoutmodelight"
+                  onclick="layout_change('light')"
+                />
+                <label class="form-check-label" for="layoutmodelight">
+                  Light
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="layout_mode"
+                  id="layoutmodedark"
+                  onclick="layout_change('dark')"
+                />
+                <label class="form-check-label" for="layoutmodedark">
+                  Dark
+                </label>
+              </div>
+              <div class="pc-rtl">
+                <p class="mt-3 mb-1">Direction</p>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="layoutmodertl"
+                  />
+                  <label class="form-check-label" for="layoutmodertl"
+                    >RTL</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h5>Preset Color</h5>
+            </div>
+            <div class="card-body">
+              <div class="theme-color preset-color">
+                <a href="error-404.html#!" class="active" data-value="preset-1"
+                  ><span></span><span></span
+                ></a>
+                <a href="error-404.html#!" class data-value="preset-2"
+                  ><span></span><span></span
+                ></a>
+                <a href="error-404.html#!" class data-value="preset-3"
+                  ><span></span><span></span
+                ></a>
+                <a href="error-404.html#!" class data-value="preset-4"
+                  ><span></span><span></span
+                ></a>
+                <a href="error-404.html#!" class data-value="preset-5"
+                  ><span></span><span></span
+                ></a>
+                <a href="error-404.html#!" class data-value="preset-6"
+                  ><span></span><span></span
+                ></a>
+                <a href="error-404.html#!" class data-value="preset-7"
+                  ><span></span><span></span
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h5>Font Family</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="layout_font"
+                  id="layoutfontRoboto"
+                  checked
+                  onclick="font_change('Roboto')"
+                />
+                <label class="form-check-label" for="layoutfontRoboto">
+                  Roboto
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="layout_font"
+                  id="layoutfontPoppins"
+                  onclick="font_change('Poppins')"
+                />
+                <label class="form-check-label" for="layoutfontPoppins">
+                  Poppins
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="layout_font"
+                  id="layoutfontInter"
+                  onclick="font_change('Inter')"
+                />
+                <label class="form-check-label" for="layoutfontInter">
+                  Inter
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="card pc-boxcontainer">
+            <div class="card-header">
+              <h5>Box Container</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="layoutboxcontainer"
+                />
+                <label class="form-check-label" for="layoutboxcontainer"
+                  >Container</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="d-grid">
+            <button class="btn btn-light-danger" id="layoutreset">
+              Reset Layout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/js/customizer.js"></script>
+  </body>
+</html>
