@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mapel;
+use App\Models\Materi;
+use App\Models\Tugas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TugasController extends Controller
 {
@@ -13,7 +17,8 @@ class TugasController extends Controller
      */
     public function index()
     {
-        //
+        $mapels = Mapel::with('guru', 'rombel')->get();
+        return view('tugas.index', compact(['mapels']));
     }
 
     /**
@@ -21,9 +26,13 @@ class TugasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function tugasMapel($id_mapel)
     {
-        //
+        // $id_tugas = session('id_tugas');
+        // $kelas_id = session('kelas_id');
+        $mapel = Mapel::findOrFail($id_mapel);
+        // dd($mapel);
+        return view('tugas.create', compact('mapel'));
     }
 
     /**
@@ -32,9 +41,34 @@ class TugasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id_mapel)
     {
-        //
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'judul_tugas' => 'required',
+            'deskripsi' => 'required',
+            'batas_waktu' => 'required',
+            'file_tugas' => 'required|file|mimes:pdf,doc,docx',
+        ]);
+        $mapel = Mapel::findOrFail($id_mapel);
+
+        $fileMateri = $request->file('file_tugas');
+        $materiName = time() . '.' . $fileMateri->getClientOriginalExtension();
+
+        $storedPath = $fileMateri->storeAs('tugas', $materiName);
+        $validatedData['file_tugas'] = $storedPath;
+
+        $tugas = new Tugas();
+        $tugas->judul_tugas = $request->judul_tugas;
+        $tugas->deskripsi = $request->deskripsi;
+        $tugas->batas_waktu = $request->batas_waktu;
+        $tugas->file_tugas = $storedPath;
+        $tugas->kelas_id = $mapel->kelas_id;
+        $tugas->id_mapel = $mapel->id_mapel;
+        $tugas->user_id = Auth::user()->id;
+        $tugas->save();
+
+        return redirect()->route('tugas.show', $tugas->id_mapel)->with('success', 'Materi berhasil ditambahkan.');
     }
 
     /**
@@ -43,20 +77,23 @@ class TugasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_mapel)
     {
-        //
-    }
+        // session(['id_mapel' => $materi->id_mapel, 'kelas_id' => $materi->kelas_id]);
 
+        // $materimapel = Materi::where('id_mapel', $materi->id_mapel)->get();
+        $mapel = Mapel::findOrFail($id_mapel);
+        return view('tugas.show', compact(['mapel']));
+    }
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tugas $tugas)
     {
-        //
+        return view('tugas.edit', compact('tugas'));
     }
 
     /**
@@ -66,10 +103,43 @@ class TugasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tugas $tugas)
     {
-        //
+        $validatedData = $request->validate([
+            'judul_tugas' => 'required',
+            'deskripsi' => 'required',
+            'batas_waktu' => 'required',
+            // 'file_tugas' => 'required|file|mimes:pdf,doc,docx',
+        ]);
+
+        $validatedData['user_id'] = auth()->user()->id;
+
+        $tugas->update([
+            'judul_tugas' => $request->judul_tugas,
+            'deskripsi' => $request->deskripsi,
+            'batas_waktu' => $request->batas_waktu,
+        ]);
+
+        if ($request->hasFile('file_tugas')) {
+            $fileTugas = $request->file('file_tugas');
+            $tugasName = time() . '.' . $fileTugas->getClientOriginalExtension();
+
+            $fileTugas->storeAs('public/tugas', $tugasName);
+
+            $validatedData['file_tugas'] = $tugasName;
+
+            $tugas->update([
+                'file_tugas' => $tugasName,
+            ]);
+        }
+
+        // $materi->update($validatedData);
+
+
+        return redirect()->route('tugas.show', $tugas->id_mapel)->with('success', 'Materi berhasil diperbarui.');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -77,8 +147,9 @@ class TugasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tugas $tugas)
     {
-        //
+        $tugas->delete();
+        return redirect()->back()->with('success', 'Materi berhasil dihapus.');
     }
 }

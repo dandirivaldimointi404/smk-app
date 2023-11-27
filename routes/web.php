@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RombelController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TugasController;
 use Illuminate\Console\View\Components\Task;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,17 @@ Route::resource('materi', MateriController::class);
 Route::resource('task', TaskController::class);
 Route::resource('evaluasi', EvaluasiController::class);
 
+// Route::resource('tugas', TugasController::class);
+Route::prefix('tugas')->group(function () {
+    Route::get('/', [TugasController::class, 'index'])->name('tugas.index');
+    Route::get('/{tugas}', [TugasController::class, 'show'])->name('tugas.show');
+    Route::post('/store/{id_mapel}', [TugasController::class, 'store'])->name('tugas.store');
+    Route::get('/edit/{tugas}', [TugasController::class, 'edit'])->name('tugas.edit');
+    Route::put('/update/{tugas}', [TugasController::class, 'update'])->name('tugas.update');
+    Route::delete('/delete/{tugas}', [TugasController::class, 'destroy'])->name('tugas.destroy');
+    Route::get('/kelas/{id_mapel}', [TugasController::class, 'tugasMapel'])->name('tugas.mapel');
+});
+
 //LAPORAN
 Route::resource('absensi', AbsensiController::class);
 
@@ -54,4 +66,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

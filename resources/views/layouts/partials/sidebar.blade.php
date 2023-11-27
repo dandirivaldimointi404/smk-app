@@ -44,8 +44,8 @@
                     <a href="{{ route('materi.index') }}" class="pc-link"><span class="pc-micon"><i
                                 class="ti ti-chart-arcs"></i></span><span class="pc-mtext">Data Materi</span></a>
                 </li>
-                <li class="pc-item">
-                    <a href="../widget/w_data.html" class="pc-link"><span class="pc-micon"><i
+                <li class="pc-item {{ Request::is('tugas') || Request::is('tugas/*') ? 'active' : '' }}">
+                    <a href="{{ route('tugas.index') }}" class="pc-link"><span class="pc-micon"><i
                                 class="ti ti-clipboard-list"></i></span><span class="pc-mtext">Data Tugas</span></a>
                 </li>
                 <li class="pc-item">
