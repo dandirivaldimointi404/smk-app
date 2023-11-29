@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\MateriController;
+use App\Http\Controllers\API\TugasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [AuthController::class, 'login']);
 
+Route::middleware(['guest'])->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+});
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('materi', [MateriController::class, 'index'])->name('materi.index');
+    Route::get('materi/{materi}', [MateriController::class, 'show'])->name('materi.show');
+
+    Route::get('tugas', [TugasController::class, 'index'])->name('tugas.index');
+    Route::get('tugas/{tugas}', [TugasController::class, 'show'])->name('tugas.show');
 });
