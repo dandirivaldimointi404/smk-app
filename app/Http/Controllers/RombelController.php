@@ -15,16 +15,20 @@ class RombelController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        $userLevel = $user->level;
 
-        $UserLevel = auth()->user()->level;
-        
-        if ($UserLevel == 'admin') {
+        if ($userLevel == 'admin') {
             $rombel = Rombel::with('guru')->get();
-            return view('rombel.index', compact('rombel'));
+        } elseif ($userLevel == 'guru') {
+            $rombel = Rombel::where('nip_id', $user->guru->nip)->with('guru')->get();
         } else {
             return redirect()->route('beranda.index')->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
         }
+
+        return view('rombel.index', compact('rombel'));
     }
+
 
 
     /**

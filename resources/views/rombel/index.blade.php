@@ -27,10 +27,12 @@
                     <div class="card">
                         <div class="card-header">
                             <h5>Daftar Kelas</h5>
-                            <a href="{{ route('rombel.create') }}" class="btn btn-outline-success d-inline-flex"
-                                style="float: right;">
-                                <i class="ti ti-circle-plus align-text-bottom"></i>Tambah Data Kelas
-                            </a>
+                            @can('admin')
+                                <a href="{{ route('rombel.create') }}" class="btn btn-outline-success d-inline-flex"
+                                    style="float: right;">
+                                    <i class="ti ti-circle-plus align-text-bottom"></i>Tambah Data Kelas
+                                </a>
+                            @endcan
 
                         </div>
                         <div class="card-body">
@@ -43,7 +45,9 @@
                                             </th>
                                             <th>Nama Kelas</th>
                                             <th>Wali Kelas</th>
-                                            <th class="text-center">Aksi</th>
+                                            @can('admin')
+                                                <th class="text-center">Aksi</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -56,18 +60,20 @@
                                                     {{ $item->nama_kelas }}
                                                 </td>
                                                 <td>{{ $item->guru->nama_guru }}</td>
-                                                <td class="text-center">
-                                                    <form action="{{ route('rombel.destroy', $item->id_kelas) }}" method="POST"
-                                                        class="delete-form">
-                                                        <a href="{{ route('rombel.edit', $item->id_kelas) }}"
-                                                            class="btn btn-outline-primary"><i class="ti ti-edit"></i></a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-outline-danger"
-                                                            data-id="{{ $item->id_kelas }}"><i
-                                                                class="ti ti-trash"></i></button>
-                                                    </form>
-                                                </td>
+                                                @can('admin')
+                                                    <td class="text-center">
+                                                        <form action="{{ route('rombel.destroy', $item->id_kelas) }}"
+                                                            method="POST" class="delete-form">
+                                                            <a href="{{ route('rombel.edit', $item->id_kelas) }}"
+                                                                class="btn btn-outline-primary"><i class="ti ti-edit"></i></a>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-outline-danger"
+                                                                data-id="{{ $item->id_kelas }}"><i
+                                                                    class="ti ti-trash"></i></button>
+                                                        </form>
+                                                    </td>
+                                                @endcan
                                             </tr>
                                         @endforeach
                                     </tbody>

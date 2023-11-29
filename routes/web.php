@@ -41,7 +41,6 @@ Route::resource('materi', MateriController::class);
 Route::resource('task', TaskController::class);
 Route::resource('evaluasi', EvaluasiController::class);
 
-// Route::resource('tugas', TugasController::class);
 Route::prefix('tugas')->group(function () {
     Route::get('/', [TugasController::class, 'index'])->name('tugas.index');
     Route::get('/{tugas}', [TugasController::class, 'show'])->name('tugas.show');

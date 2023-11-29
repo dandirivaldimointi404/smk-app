@@ -16,15 +16,20 @@ class MapelController extends Controller
      */
     public function index()
     {
-        $UserLevel = auth()->user()->level;
+        $user = auth()->user();
+        $userLevel = $user->level;
 
-        if ($UserLevel == 'admin') {
+        if ($userLevel == 'admin') {
             $mapel = Mapel::with('guru', 'rombel')->get();
-            return view('mapel.index', compact('mapel'));
+        } elseif ($userLevel == 'guru') {
+            $mapel = Mapel::where('nip_id', $user->guru->nip)->with('guru')->get();
         } else {
             return redirect()->route('beranda.index')->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
         }
+
+        return view('mapel.index', compact('mapel'));
     }
+
 
     /**
      * Show the form for creating a new resource.

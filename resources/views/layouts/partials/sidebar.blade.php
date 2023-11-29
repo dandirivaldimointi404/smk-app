@@ -15,10 +15,13 @@
                     <label>Master Data</label>
                     <i class="ti ti-dashboard"></i>
                 </li>
-                <li class="pc-item">
-                    <a href="{{ route('guru.index') }}" class="pc-link"><span class="pc-micon"><i
-                                class="ti ti-dashboard"></i></span><span class="pc-mtext">Data Guru</span></a>
-                </li>
+                
+                @can('admin')
+                    <li class="pc-item">
+                        <a href="{{ route('guru.index') }}" class="pc-link"><span class="pc-micon"><i
+                                    class="ti ti-dashboard"></i></span><span class="pc-mtext">Data Guru</span></a>
+                    </li>
+                @endcan
                 <li class="pc-item">
                     <a href="{{ route('rombel.index') }}" class="pc-link"><span class="pc-micon"><i
                                 class="ti ti-device-analytics"></i></span><span class="pc-mtext">Data
@@ -29,11 +32,14 @@
                                 class="ti ti-device-analytics"></i></span><span class="pc-mtext">Data
                             Mapel</span></a>
                 </li>
-                <li class="pc-item">
-                    <a href="{{ route('siswa.index') }}" class="pc-link"><span class="pc-micon"><i
-                                class="ti ti-device-analytics"></i></span><span class="pc-mtext">Data
-                            Siswa</span></a>
-                </li>
+
+                @can('admin')
+                    <li class="pc-item">
+                        <a href="{{ route('siswa.index') }}" class="pc-link"><span class="pc-micon"><i
+                                    class="ti ti-device-analytics"></i></span><span class="pc-mtext">Data
+                                Siswa</span></a>
+                    </li>
+                @endcan
 
 
                 <li class="pc-item pc-caption">

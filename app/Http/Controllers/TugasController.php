@@ -17,7 +17,15 @@ class TugasController extends Controller
      */
     public function index()
     {
-        $mapels = Mapel::with('guru', 'rombel')->get();
+        $user = auth()->user();
+        $userLevel = $user->level;
+        if ($userLevel == 'admin') {
+            $mapels = Mapel::with('guru', 'rombel')->get();
+        } elseif ($userLevel == 'guru') {
+            $mapels = Mapel::where('nip_id', $user->guru->nip)->with('guru', 'rombel')->get();
+        } else {
+            return redirect()->route('beranda.index')->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
+        }
         return view('tugas.index', compact(['mapels']));
     }
 
@@ -28,10 +36,7 @@ class TugasController extends Controller
      */
     public function tugasMapel($id_mapel)
     {
-        // $id_tugas = session('id_tugas');
-        // $kelas_id = session('kelas_id');
         $mapel = Mapel::findOrFail($id_mapel);
-        // dd($mapel);
         return view('tugas.create', compact('mapel'));
     }
 
@@ -43,7 +48,6 @@ class TugasController extends Controller
      */
     public function store(Request $request, $id_mapel)
     {
-        // dd($request->all());
         $validatedData = $request->validate([
             'judul_tugas' => 'required',
             'deskripsi' => 'required',
@@ -79,9 +83,7 @@ class TugasController extends Controller
      */
     public function show($id_mapel)
     {
-        // session(['id_mapel' => $materi->id_mapel, 'kelas_id' => $materi->kelas_id]);
 
-        // $materimapel = Materi::where('id_mapel', $materi->id_mapel)->get();
         $mapel = Mapel::findOrFail($id_mapel);
         return view('tugas.show', compact(['mapel']));
     }
@@ -109,7 +111,6 @@ class TugasController extends Controller
             'judul_tugas' => 'required',
             'deskripsi' => 'required',
             'batas_waktu' => 'required',
-            // 'file_tugas' => 'required|file|mimes:pdf,doc,docx',
         ]);
 
         $validatedData['user_id'] = auth()->user()->id;
@@ -133,7 +134,6 @@ class TugasController extends Controller
             ]);
         }
 
-        // $materi->update($validatedData);
 
 
         return redirect()->route('tugas.show', $tugas->id_mapel)->with('success', 'Materi berhasil diperbarui.');

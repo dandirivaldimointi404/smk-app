@@ -17,7 +17,16 @@ class MateriController extends Controller
      */
     public function index()
     {
-        $mapel = Mapel::with('guru', 'rombel')->get();
+        $user = auth()->user();
+        $userLevel = $user->level;
+
+        if ($userLevel == 'admin') {
+            $mapel = Mapel::with('guru', 'rombel')->get();
+        } elseif ($userLevel == 'guru') {
+            $mapel = Mapel::where('nip_id', $user->guru->nip)->with('guru','rombel')->get();
+        } else {
+            return redirect()->route('beranda.index')->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
+        }
         return view('materi.index', compact(['mapel']));
     }
 

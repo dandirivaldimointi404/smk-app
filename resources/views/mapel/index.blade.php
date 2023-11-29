@@ -27,10 +27,12 @@
                     <div class="card">
                         <div class="card-header">
                             <h5>Daftar Mapel</h5>
-                            <a href="{{ route('mapel.create') }}" class="btn btn-outline-success d-inline-flex"
-                                style="float: right;">
-                                <i class="ti ti-circle-plus align-text-bottom"></i>Tambah Data Mapel
-                            </a>
+                            @can('admin')
+                                <a href="{{ route('mapel.create') }}" class="btn btn-outline-success d-inline-flex"
+                                    style="float: right;">
+                                    <i class="ti ti-circle-plus align-text-bottom"></i>Tambah Data Mapel
+                                </a>
+                            @endcan
 
                         </div>
                         <div class="card-body">
@@ -44,7 +46,9 @@
                                             <th>Nama Mapel</th>
                                             <th>Kelas</th>
                                             <th>Pengajar</th>
-                                            <th class="text-center">Aksi</th>
+                                            @can('admin')
+                                                <th class="text-center">Aksi</th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -58,18 +62,20 @@
                                                 </td>
                                                 <td>{{ $item->rombel->nama_kelas }}</td>
                                                 <td>{{ $item->guru->nama_guru }}</td>
-                                                <td class="text-center">
-                                                    <form action="{{ route('mapel.destroy', $item->id_mapel) }}" method="POST"
-                                                        class="delete-form">
-                                                        <a href="{{ route('mapel.edit', $item->id_mapel) }}"
-                                                            class="btn btn-outline-primary"><i class="ti ti-edit"></i></a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-outline-danger"
-                                                            data-id="{{ $item->id_mapel }}"><i
-                                                                class="ti ti-trash"></i></button>
-                                                    </form>
-                                                </td>
+                                                @can('admin')
+                                                    <td class="text-center">
+                                                        <form action="{{ route('mapel.destroy', $item->id_mapel) }}"
+                                                            method="POST" class="delete-form">
+                                                            <a href="{{ route('mapel.edit', $item->id_mapel) }}"
+                                                                class="btn btn-outline-primary"><i class="ti ti-edit"></i></a>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-outline-danger"
+                                                                data-id="{{ $item->id_mapel }}"><i
+                                                                    class="ti ti-trash"></i></button>
+                                                        </form>
+                                                    </td>
+                                                @endcan
                                             </tr>
                                         @endforeach
                                     </tbody>
