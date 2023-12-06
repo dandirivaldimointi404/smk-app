@@ -25,7 +25,7 @@ class TugasController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Detail tugas ' . $tugas->judul_tugas,
-                'data' => $tugas,
+                'data' => $tugas->with('user', 'rombel', 'mapel')->first(),
             ]);
         } else {
             return response()->json([
