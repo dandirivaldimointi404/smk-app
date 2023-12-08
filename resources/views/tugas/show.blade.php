@@ -65,6 +65,8 @@
                                             class="delete-form">
                                             <a href="{{ route('tugas.edit', $tugas->id_tugas) }}"
                                                 class="dropdown-item">Edit</a>
+                                            <a href="{{ route('tugas.masuk', $tugas->id_tugas) }}"
+                                                class="dropdown-item">Tugas Masuk</a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="dropdown-item"

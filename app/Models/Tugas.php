@@ -27,4 +27,9 @@ class Tugas extends Model
     {
         return $this->belongsTo(Rombel::class, 'kelas_id');
     }
+
+    public function tugasmasuk()
+    {
+        return $this->hasMany(TugasMasuk::class, 'id_tugas');
+    }
 }

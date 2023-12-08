@@ -54,6 +54,11 @@ class User extends Authenticatable
         return $this->hasOne(Siswa::class);
     }
 
+    public function tugasmasuk()
+    {
+        return $this->hasOne(TugasMasuk::class);
+    }
+
     public function materi()
     {
         return $this->hasOne(Materi::class);

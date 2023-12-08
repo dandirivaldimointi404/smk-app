@@ -44,6 +44,7 @@ Route::resource('evaluasi', EvaluasiController::class);
 Route::prefix('tugas')->group(function () {
     Route::get('/', [TugasController::class, 'index'])->name('tugas.index');
     Route::get('/{tugas}', [TugasController::class, 'show'])->name('tugas.show');
+    Route::get('tugas-masuk/{tugas}', [TugasController::class, 'masuk'])->name('tugas.masuk');
     Route::post('/store/{id_mapel}', [TugasController::class, 'store'])->name('tugas.store');
     Route::get('/edit/{tugas}', [TugasController::class, 'edit'])->name('tugas.edit');
     Route::put('/update/{tugas}', [TugasController::class, 'update'])->name('tugas.update');

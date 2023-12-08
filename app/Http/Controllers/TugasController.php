@@ -83,10 +83,16 @@ class TugasController extends Controller
      */
     public function show($id_mapel)
     {
-
         $mapel = Mapel::findOrFail($id_mapel);
         return view('tugas.show', compact(['mapel']));
     }
+
+    public function masuk($id_tugas)
+    {
+        $tugas = Tugas::findOrFail($id_tugas);
+        return view('tugas.tugas-masuk', compact(['tugas']));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

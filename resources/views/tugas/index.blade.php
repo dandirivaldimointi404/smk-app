@@ -1,4 +1,24 @@
 @extends('layouts.master')
+<style>
+    .assignment-container {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        margin: 20px;
+    }
+
+    .assignment-header {
+        background-color: #f2f2f2;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .assignment-content {
+        display: none;
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+</style>
 
 @section('content')
     <div class="pc-container">
@@ -50,6 +70,21 @@
                     </div>
                 @endforeach
 
+                <div class="assignment-container">
+                    <div class="assignment-header" onclick="toggleAssignment('assignment1')">Tugas 1</div>
+                    <div class="assignment-content" id="assignment1">
+                        <p>Deskripsi tugas 1.</p>
+                        <p>Deadline: 10 Desember 2023.</p>
+                    </div>
+                </div>
+
+                <div class="assignment-container">
+                    <div class="assignment-header" onclick="toggleAssignment('assignment2')">Tugas 2</div>
+                    <div class="assignment-content" id="assignment2">
+                        <p>Deskripsi tugas 2.</p>
+                        <p>Deadline: 15 Desember 2023.</p>
+                    </div>
+                </div>
 
                 {{-- <div class="col-sm-4">
                 <div class="card bg-primary text-white widget-visitor-card">
@@ -74,4 +109,15 @@
 
         </div>
     </div>
+
+    <script>
+        function toggleAssignment(assignmentId) {
+            var assignmentContent = document.getElementById(assignmentId);
+            if (assignmentContent.style.display === 'none' || assignmentContent.style.display === '') {
+                assignmentContent.style.display = 'block';
+            } else {
+                assignmentContent.style.display = 'none';
+            }
+        }
+    </script>
 @endsection
