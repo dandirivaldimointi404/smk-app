@@ -23,9 +23,11 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('profile', [AuthController::class, 'show']);
+    Route::put('profile/edit', [AuthController::class, 'edit']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
-
+    
     Route::get('materi', [MateriController::class, 'index'])->name('materi.index');
     Route::get('materi/{materi}', [MateriController::class, 'show'])->name('materi.show');
 
