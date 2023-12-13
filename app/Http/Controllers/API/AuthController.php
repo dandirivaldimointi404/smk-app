@@ -47,50 +47,44 @@ class AuthController extends Controller
     }
 
 
-    public function edit(Request $request)
+    public function ubahData(Request $request)
     {
-        $user = auth()->user();
-    
-        $updateData = [
-            'name' => $request->input('name'),
-            'username' => $request->input('username'),
-        ];
-    
-        if ($request->filled('password')) {
-            $updateData['password'] = Hash::make($request->input('password'));
-        }
-    
+        $user = User::findOrFail(Auth::user()->id);
+
+        $user->update([
+            'name' => $request->name,
+        ]);
+
         if ($request->hasFile('avatar')) {
-            if ($user->avatar) {
-                Storage::delete('avatars/' . $user->avatar);
-            }
-    
-            $avatarBlob = file_get_contents($request->file('avatar')->getRealPath());
-            $updateData['avatar'] = $avatarBlob; 
+            $file = $request->file('avatar');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('avatar', $filename, 'public');
+            $user->update([
+                'avatar' => $filename,
+            ]);
         }
-    
-        DB::table('users')
-            ->where('id', $user->id)
-            ->update($updateData);
-    
-        if ($user->siswa) {
-            DB::table('tb_siswa')
-                ->where('user_id', $user->id)
-                ->update([
-                    'nama_siswa' => $request->input('name'),
-                ]);
+
+        if ($request->filled('username')) {
+            $user->update([
+                'username' => $request->username,
+            ]);
+
+            $request->user()->currentAccessToken()->delete();
         }
-    
-        $updatedUser = DB::table('users')->where('id', $user->id)->first();
-    
-        $response = [
-            'message' => 'Profile Berhasil Di Update',
-            'user' => $updatedUser,
-        ];
-    
-        return response()->json($response);
+        if ($request->filled('password')) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+
+            $request->user()->currentAccessToken()->delete();
+        }
+
+        return response()->json([
+            'message' => 'Ubah Data Berhasil',
+            'data' => $user,
+        ], 200);
     }
-    
+
 
 
     public function logout(Request $request)

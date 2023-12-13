@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BiodataController;
 use App\Http\Controllers\API\MateriController;
+use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\TugasController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,7 @@ Route::middleware(['guest'])->group(function () {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('profile', [AuthController::class, 'show']);
-    Route::put('profile/edit', [AuthController::class, 'edit']);
+    Route::post('biodata/edit', [AuthController::class, 'ubahData']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
