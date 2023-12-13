@@ -82,19 +82,15 @@ class AuthController extends Controller
         }
     
         $updatedUser = DB::table('users')->where('id', $user->id)->first();
-        $updatedSiswa = DB::table('tb_siswa')->where('user_id', $user->id)->first();
     
         $response = [
             'message' => 'Profile Berhasil Di Update',
             'user' => $updatedUser,
-            'siswa' => $updatedSiswa,
         ];
     
         return response()->json($response);
     }
     
-
-
 
 
     public function logout(Request $request)
