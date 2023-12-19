@@ -82,7 +82,7 @@ class MateriController extends Controller
 
         $file_path = "storage/{$id_materi->file_materi}";
 
-        $external_url = 'https://ef3d-140-213-124-99.ngrok-free.app/storage/';
+        $external_url = 'http://192.168.43.14:8000/storage/';
         $file_path = str_replace(asset('storage'), $external_url, asset($file_path));
 
         return response()->json([

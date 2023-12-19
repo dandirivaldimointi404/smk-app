@@ -16,19 +16,29 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if (!Auth::attempt($request->only('username', 'password'))) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Login Gagal'
+            ], 401);
         }
 
         $user = User::where('username', $request['username'])->firstOrFail();
 
         if ($user->level !== 'siswa') {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Login Gagal'
+            ], 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        $userData = $user->toArray();
+
         return response()->json([
-            'message' => 'Hi ' . $user->name . ', welcome to home',
+            'status' => 'true',
+            'message' => 'Login Berhasil',
+            'data' => $userData,
             'access_token' => $token,
             'token_type' => 'Bearer',
         ]);
@@ -84,8 +94,6 @@ class AuthController extends Controller
             'data' => $user,
         ], 200);
     }
-
-
 
     public function logout(Request $request)
     {

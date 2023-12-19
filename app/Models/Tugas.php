@@ -30,6 +30,6 @@ class Tugas extends Model
 
     public function tugasmasuk()
     {
-        return $this->hasMany(TugasMasuk::class, 'id_tugas');
+        return $this->hasOne(TugasMasuk::class);
     }
 }
