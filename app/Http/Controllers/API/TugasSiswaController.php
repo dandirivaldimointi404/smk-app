@@ -18,7 +18,7 @@ class TugasSiswaController extends Controller
 
     public function index()
     {
-        $tugasMasuk = TugasMasuk::all();
+        $tugasMasuk = TugasMasuk::with('tugas','user')->get();
         // dd($tugasMasuk);
 
         return response()->json(['data' => $tugasMasuk], 200);
@@ -38,23 +38,42 @@ class TugasSiswaController extends Controller
                 'tugas_id' => '',
             ]);
 
-            $fileTugasMasuk = $request->file('file_tugasmasuk');
-            $tugasMasukFileName = time() . '.' . $fileTugasMasuk->getClientOriginalExtension();
-            $storedPath = $fileTugasMasuk->storeAs('tugas', $tugasMasukFileName);
+            try {
+                $fileTugasMasuk = $request->file('file_tugasmasuk');
+                $tugasMasukFileName = time() . '.' . $fileTugasMasuk->getClientOriginalExtension();
+                $storedPath = $fileTugasMasuk->storeAs('tugas', $tugasMasukFileName);
 
-            // Use the model's create method to create a new instance and save it in one step
-            $tugasSiswa = TugasMasuk::create([
-                'user_id' => $user->id,
-                'tugas_id' => $request->tugas_id,
-                'file_tugasmasuk' => $storedPath,
-                'status' => 'terkirim',
-            ]);
+                // Use the model's create method to create a new instance and save it in one step
+                $tugasSiswa = TugasMasuk::create([
+                    'user_id' => $user->id,
+                    'tugas_id' => $request->tugas_id,
+                    'file_tugasmasuk' => $storedPath,
+                    'status' => 'terkirim',
+                ]);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Tugas submitted successfully.',
-                'data' => $tugasSiswa,
-            ], 201);
+                // Retrieve the user instance based on user_id
+                $userInstance = User::find($user->id);
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Tugas submitted successfully.',
+                    'data' => [
+                        'user_id' => $userInstance->id,
+                        'user_name' => $userInstance->name,
+                        'tugas_id' => $tugasSiswa->tugas_id,
+                        'file_tugasmasuk' => $tugasSiswa->file_tugasmasuk,
+                        'status' => $tugasSiswa->status,
+                        // Add other fields as needed
+                    ],
+                ], 201);
+            } catch (\Exception $e) {
+                // Handle exceptions (e.g., database error, file upload error)
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Error submitting tugas.',
+                    'data' => null,
+                ], 500);
+            }
         } else {
             return response()->json([
                 'status' => false,
@@ -63,6 +82,7 @@ class TugasSiswaController extends Controller
             ], 403);
         }
     }
+
 
 
     public function store(Request $request)
