@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
     Route::post('login', [AuthController::class, 'login']);
+    Route::get('materi', [MateriController::class, 'index'])->name('materi.index');
+
 });
 
 
@@ -33,7 +35,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     
     Route::post('/logout', [AuthController::class, 'logout']);
     
-    Route::get('materi', [MateriController::class, 'index'])->name('materi.index');
     Route::get('materi/{mapel}', [MateriController::class, 'show'])->name('materi.show');
     Route::get('materi/by-mapel/{id_materi}', [MateriController::class, 'showMateri'])->name('materi.showMateri');
     Route::get('materi/{id_materi}/download', [MateriController::class, 'downloadMateri'])->name('materi.download');
